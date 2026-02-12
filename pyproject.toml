@@ -7,7 +7,7 @@ name = "microagent-ai"
 version = "0.1.1"
 description = "A lightweight, production-ready framework for building LLM-powered agents with tool-calling and memory support"
 readme = "README.md"
-documentation = "https://github.com/yourusername/microagent-ai#readme"
+documentation = "https://github.com/jcremona2/microagent-ai#readme"
 requires-python = ">=3.8"
 
 # Authors and maintainers
