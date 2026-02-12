@@ -1,6 +1,6 @@
 """microagent - A lightweight framework for building LLM-powered agents."""
 
-__version__ = "0.1.0"
+__version__ = "0.1.2"
 
 from .agent import Agent
 from .llm import OpenAIModel

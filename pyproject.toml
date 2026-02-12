@@ -4,24 +4,34 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "microagent-ai"
-version = "0.1.1"
+version = "0.1.2"
 description = "A lightweight, production-ready framework for building LLM-powered agents with tool-calling and memory support"
 readme = "README.md"
-documentation = "https://github.com/jcremona2/microagent-ai#readme"
 requires-python = ">=3.8"
+license = { text = "MIT" }
 
-# Authors and maintainers
 authors = [
     { name = "Julian Cremona", email = "jncremona@gmail.com" },
 ]
+
 maintainers = [
     { name = "Julian Cremona", email = "jncremona@gmail.com" },
 ]
 
-# License
-license = { text = "MIT" }
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
 
-# Dependencies
 dependencies = [
     "pydantic>=2.0.0",
     "typing-extensions>=4.0.0",
@@ -29,17 +39,12 @@ dependencies = [
     "python-dotenv>=1.0.0",
 ]
 
-# Optional dependencies (extras)
 [project.optional-dependencies]
 # Runtime dependencies
 openai = ["openai>=1.0.0"]
 groq = ["groq>=0.3.0"]
-all = [
-    "openai>=1.0.0",
-    "groq>=0.3.0"
-]
+all = ["openai>=1.0.0", "groq>=0.3.0"]
 
-# Development dependencies
 dev = [
     # Testing
     "pytest>=8.0.0",
@@ -85,38 +90,11 @@ dev = [
     "tomli>=2.0.0",
 ]
 
-# Project URLs
 [project.urls]
 Homepage = "https://github.com/jcremona2/microagent-ai"
-Bug Tracker = "https://github.com/jcremona2/microagent-ai/issues"
+Bug-Tracker = "https://github.com/jcremona2/microagent-ai/issues"
 Documentation = "https://github.com/jcremona2/microagent-ai#readme"
 Changelog = "https://github.com/jcremona2/microagent-ai/releases"
-
-[project.optional-dependencies]
-openai = ["openai>=1.0.0"]
-groq = ["groq>=0.3.0"]
-all = [
-    "openai>=1.0.0",
-    "groq>=0.3.0"
-]
-dev = [
-    "pytest>=7.0.0",
-    "pytest-cov>=4.0.0",
-    "pytest-asyncio>=0.21.0",
-    "black>=23.0.0",
-    "isort>=5.0.0",
-    "mypy>=1.0.0",
-    "pylint>=3.0.0",
-    "types-pyyaml>=6.0.0",
-    "build>=0.10.0",
-    "twine>=4.0.0",
-]
-
-[project.urls]
-Homepage = "https://github.com/jcremona2/microagent"
-Documentation = "https://github.com/jcremona2/microagent#readme"
-Issues = "https://github.com/jcremona2/microagent/issues"
-Changelog = "https://github.com/jcremona2/microagent/blob/master/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
 include = ["microagent", "microagent.*"]
