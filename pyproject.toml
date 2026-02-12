@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=42", "wheel"]
+requires = ["setuptools>=42", "wheel", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,10 +8,10 @@ version = "0.1.0"
 description = "A lightweight, production-ready framework for building LLM-powered agents with tool-calling and memory support"
 readme = "README.md"
 authors = [
-    { name = "Your Name", email = "your.email@example.com" },
+    { name = "Julian Cremona", email = "julian.cremona@example.com" },
 ]
 maintainers = [
-    { name = "Your Name", email = "your.email@example.com" },
+    { name = "Julian Cremona", email = "julian.cremona@example.com" },
 ]
 license = { text = "MIT" }
 classifiers = [
@@ -23,6 +23,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
 requires-python = ">=3.10"
@@ -30,40 +31,72 @@ dependencies = [
     "pydantic>=2.0.0",
     "typing-extensions>=4.0.0",
     "typing-inspect>=0.9.0",
+    "python-dotenv>=1.0.0",
 ]
 
 [project.optional-dependencies]
 openai = ["openai>=1.0.0"]
+groq = ["groq>=0.3.0"]
+all = [
+    "openai>=1.0.0",
+    "groq>=0.3.0"
+]
 dev = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
+    "pytest-asyncio>=0.21.0",
     "black>=23.0.0",
     "isort>=5.0.0",
     "mypy>=1.0.0",
     "pylint>=3.0.0",
     "types-pyyaml>=6.0.0",
+    "build>=0.10.0",
+    "twine>=4.0.0",
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/microagent"
-Documentation = "https://github.com/yourusername/microagent#readme"
-Issues = "https://github.com/yourusername/microagent/issues"
-Changelog = "https://github.com/yourusername/microagent/releases"
+Homepage = "https://github.com/jcremona2/microagent"
+Documentation = "https://github.com/jcremona2/microagent#readme"
+Issues = "https://github.com/jcremona2/microagent/issues"
+Changelog = "https://github.com/jcremona2/microagent/blob/master/CHANGELOG.md"
 
-[tool.setuptools]
-packages = ["microagent"]
-
-[tool.setuptools.package-data]
-"*" = ["py.typed"]
+[tool.setuptools.packages.find]
+include = ["microagent", "microagent.*"]
 
 [tool.black]
-line-length = 100
-target-version = ["py310"]
+line-length = 88
+target-version = ['py310']
 include = '\.pyi?$'
 
 [tool.isort]
 profile = "black"
-line_length = 100
+line_length = 88
+skip = [".venv", "venv", "build", "dist"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+asyncio_mode = "auto"
+addopts = "-v --cov=microagent --cov-report=term-missing"
+
+[tool.coverage.run]
+source = ["microagent"]
+omit = ["*/tests/*", "*/__init__.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "raise ImportError",
+    "if __name__ == .__main__.:",
+    "pass",
+]
+show_missing = true
+skip_covered = true
+
+[tool.setuptools.package-data]
+"*" = ["py.typed"]
 
 [tool.mypy]
 python_version = "3.10"
@@ -85,19 +118,3 @@ module = ["tests.*"]
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = "test_*.py"
-addopts = "-v --cov=microagent --cov-report=term-missing"
-
-[coverage.run]
-source = ["microagent"]
-omit = ["*/tests/*", "*/__init__.py"]
-
-[coverage.report]
-show_missing = true
-skip_covered = true
-
-[egg_info]
-tag_build = ""
-tag_date = 0
