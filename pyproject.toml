@@ -7,33 +7,90 @@ name = "microagent-ai"
 version = "0.1.1"
 description = "A lightweight, production-ready framework for building LLM-powered agents with tool-calling and memory support"
 readme = "README.md"
+documentation = "https://github.com/yourusername/microagent-ai#readme"
+requires-python = ">=3.8"
+
+# Authors and maintainers
 authors = [
-    { name = "Julian Cremona", email = "julian.cremona@example.com" },
+    { name = "Julian Cremona", email = "jncremona@gmail.com" },
 ]
 maintainers = [
-    { name = "Julian Cremona", email = "julian.cremona@example.com" },
+    { name = "Julian Cremona", email = "jncremona@gmail.com" },
 ]
+
+# License
 license = { text = "MIT" }
-classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Topic :: Scientific/Engineering",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-    "Typing :: Typed",
-]
-requires-python = ">=3.10"
+
+# Dependencies
 dependencies = [
     "pydantic>=2.0.0",
     "typing-extensions>=4.0.0",
     "typing-inspect>=0.9.0",
     "python-dotenv>=1.0.0",
-    "groq>=0.3.0",
 ]
+
+# Optional dependencies (extras)
+[project.optional-dependencies]
+# Runtime dependencies
+openai = ["openai>=1.0.0"]
+groq = ["groq>=0.3.0"]
+all = [
+    "openai>=1.0.0",
+    "groq>=0.3.0"
+]
+
+# Development dependencies
+dev = [
+    # Testing
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-mock>=3.12.0",
+    "pytest-xdist>=3.5.0",
+    "pytest-randomly>=3.15.0",
+    "pytest-html>=4.1.0",
+    "pytest-benchmark>=4.0.0",
+    
+    # Linting & Formatting
+    "black>=24.1.0",
+    "isort>=5.13.0",
+    "flake8>=7.0.0",
+    "flake8-bugbear>=24.1.0",
+    "mypy>=1.7.0",
+    "bandit>=1.7.5",
+    "safety>=2.3.0",
+    "pre-commit>=3.5.0",
+    
+    # Documentation
+    "sphinx>=7.0.0",
+    "sphinx-rtd-theme>=1.3.0",
+    "sphinx-autodoc-typehints>=2.0.0",
+    "sphinx-copybutton>=0.5.2",
+    "myst-parser>=2.0.0",
+    
+    # Build & Release
+    "build>=1.0.0",
+    "twine>=4.0.0",
+    "setuptools>=69.0.0",
+    "wheel>=0.42.0",
+    "setuptools-scm>=8.0.0",
+    
+    # Type stubs
+    "types-requests>=2.31.0",
+    "types-python-dateutil>=2.8.0",
+    
+    # Utilities
+    "ipython>=8.0.0",
+    "ipdb>=0.13.0",
+    "tomli>=2.0.0",
+]
+
+# Project URLs
+[project.urls]
+Homepage = "https://github.com/jcremona2/microagent-ai"
+Bug Tracker = "https://github.com/jcremona2/microagent-ai/issues"
+Documentation = "https://github.com/jcremona2/microagent-ai#readme"
+Changelog = "https://github.com/jcremona2/microagent-ai/releases"
 
 [project.optional-dependencies]
 openai = ["openai>=1.0.0"]

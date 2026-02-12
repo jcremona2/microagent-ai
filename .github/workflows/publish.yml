@@ -1,0 +1,45 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write  # Required for trusted publishing
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install build tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install build twine
+    
+    - name: Build package
+      run: |
+        python -m build
+    
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        user: __token__
+        password: ${{ secrets.PYPI_API_TOKEN }}
+        skip_existing: true
+        verbose: true
+    
+    - name: Verify package on PyPI
+      run: |
+        pip install microagent-ai==$(python -c "import tomli; print(tomli.load(open('pyproject.toml', 'rb'))['project']['version'])")
+        python -c "import microagent; print(f'Successfully installed {microagent.__version__}')"
+      env:
+        PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}

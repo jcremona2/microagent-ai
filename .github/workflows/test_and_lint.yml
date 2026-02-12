@@ -5,15 +5,29 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  schedule:
+    # Run weekly on Sundays
+    - cron: '0 0 * * 0'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
     name: Test with Python ${{ matrix.python-version }}
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        os: [ubuntu-latest]
+        # Test on Windows and macOS for the latest Python version
+        include:
+          - python-version: "3.11"
+            os: windows-latest
+          - python-version: "3.11"
+            os: macos-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -22,6 +36,7 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
+        cache: 'pip'
     
     - name: Install dependencies
       run: |
@@ -31,34 +46,43 @@ jobs:
     - name: Run tests
       env:
         PYTHONPATH: ${{ github.workspace }}
+        # Add any required environment variables here
+        # GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       run: |
-        python -m pytest -v --cov=microagent --cov-report=xml
+        python -m pytest -v --cov=microagent --cov-report=xml --cov-report=term
     
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
+        token: ${{ secrets.CODECOV_TOKEN }}
         file: ./coverage.xml
         fail_ci_if_error: false
+        verbose: true
 
   lint:
-    name: Lint
+    name: Lint and Type Check
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     
-    - name: Set up Python 3.11
+    - name: Set up Python 3.12
       uses: actions/setup-python@v4
       with:
-        python-version: "3.11"
+        python-version: "3.12"
+        cache: 'pip'
     
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install black flake8 mypy
+        pip install black flake8 mypy isort bandit safety pre-commit
     
     - name: Check code formatting with black
       run: |
-        black --check .
+        black --check --diff .
+    
+    - name: Check import sorting with isort
+      run: |
+        isort --check-only --diff .
     
     - name: Lint with flake8
       run: |
@@ -67,3 +91,46 @@ jobs:
     - name: Type check with mypy
       run: |
         mypy microagent tests
+    
+    - name: Run security audit with bandit
+      run: |
+        bandit -r microagent -x tests
+    
+    - name: Check for vulnerable dependencies
+      run: |
+        safety check --full-report
+
+  pre-commit:
+    name: Pre-commit
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+    - uses: pre-commit/action@v3.0.0
+
+  docs:
+    name: Build Docs
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .[docs]
+    - name: Build documentation
+      run: |
+        cd docs
+        make html
+    - name: Upload artifact
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      uses: actions/upload-artifact@v3
+      with:
+        name: documentation
+        path: docs/_build/html/
+        retention-days: 5
