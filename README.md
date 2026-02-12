@@ -1,4 +1,4 @@
-# MicroAgent
+# MicroAgent - Ai
 
 A lightweight framework for building and testing AI agents with support for multiple LLM providers.
 
