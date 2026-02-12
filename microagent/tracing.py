@@ -90,7 +90,9 @@ class Tracer:
             start_time=time.time(),
         )
 
-    def end_run(self, output: Optional[str] = None, error: Optional[Exception] = None) -> None:
+    def end_run(
+        self, output: Optional[str] = None, error: Optional[Exception] = None
+    ) -> None:
         """Finish the current run, recording output or error."""
         if not self.enabled or not self.current_run:
             return
@@ -155,4 +157,3 @@ class Tracer:
             data["error"] = f"{type(error).__name__}: {error}"
 
         self._add_step(StepType.TOOL_RESULT, data)
-

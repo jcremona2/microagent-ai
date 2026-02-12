@@ -2,7 +2,18 @@
 
 import inspect
 from dataclasses import dataclass
-from typing import Any, Callable, Dict, List, Optional, Type, TypeVar, Union, get_args, get_origin
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    List,
+    Optional,
+    Type,
+    TypeVar,
+    Union,
+    get_args,
+    get_origin,
+)
 
 from .exceptions import InvalidToolArguments, ToolExecutionError
 
@@ -64,12 +75,13 @@ class Tool:
         except Exception as exc:
             # Include underlying exception type and message for better debugging.
             raise ToolExecutionError(
-                f"Error executing tool '{self.name}': "
-                f"{type(exc).__name__}: {exc}"
+                f"Error executing tool '{self.name}': " f"{type(exc).__name__}: {exc}"
             ) from exc
 
 
-def tool(func: Optional[Callable[..., Any]] = None, *, name: Optional[str] = None) -> Callable[..., Any]:
+def tool(
+    func: Optional[Callable[..., Any]] = None, *, name: Optional[str] = None
+) -> Callable[..., Any]:
     """
     Decorator to register a function as a tool.
 
@@ -179,9 +191,7 @@ def _is_instance_of_type(value: Any, expected_type: Type[Any]) -> bool:
         if value is None and type(None) in args:
             return True
         return any(
-            _is_instance_of_type(value, arg)
-            for arg in args
-            if arg is not type(None)
+            _is_instance_of_type(value, arg) for arg in args if arg is not type(None)
         )
 
     if origin in (list, tuple, set):
