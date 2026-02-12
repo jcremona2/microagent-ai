@@ -26,7 +26,7 @@ class GroqProvider:
             
         self.client = Groq(**client_kwargs)
     
-    async def chat_complete(
+    def chat_complete(
         self,
         messages: List[Dict[str, str]],
         model: str = "llama-3.3-70b-versatile",
@@ -46,7 +46,7 @@ class GroqProvider:
         Returns:
             ChatCompletion object containing the generated response.
         """
-        return await self.client.chat.completions.create(
+        return self.client.chat.completions.create(
             model=model,
             messages=messages,
             temperature=temperature,
