@@ -223,7 +223,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Project Structure
 
-```
 microagent/
 ├── microagent/               # Main package
 │   ├── __init__.py           # Package initialization
