@@ -4,14 +4,14 @@ A lightweight framework for building and testing AI agents with support for mult
 
 ## Features
 
-- 🚀 Multi-provider support (OpenAI, Groq, OpenRouter, and more)
-- 🔧 Easy configuration via environment variables
-- 🧪 Comprehensive test suite
-- 📦 Well-documented and type-annotated code
-- 🔄 Async/await support
-- 🧠 Built-in memory and context management
-- ⚡ High-performance LLM inference with Groq
-- 🔍 Built-in model validation and error handling
+- Multi-provider support (OpenAI, Groq, OpenRouter, and more)
+- Easy configuration via environment variables
+- Comprehensive test suite
+- Well-documented and type-annotated code
+- Async/await support
+- Built-in memory and context management
+- High-performance LLM inference with Groq
+- Built-in model validation and error handling
 
 ## Installation
 
@@ -219,13 +219,6 @@ Contributions are welcome! Please follow these steps:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Thanks to Groq for their high-performance inference platform
-- Inspired by the broader AI/ML community's work on LLM tooling
-- Built with ❤️ by [Your Name]
-SKIP_SLOW_TESTS=false
 ```
 
 ## Project Structure
@@ -262,8 +255,3 @@ microagent/
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
-
-- Thanks to all LLM providers for their amazing APIs
-- Inspired by various open-source AI agent frameworks
-- Built with ❤️ by the community
