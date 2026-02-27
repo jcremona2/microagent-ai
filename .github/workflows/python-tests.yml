@@ -28,6 +28,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements-dev.txt
         pip install -e .
+        pip install pytest pytest-cov black
+        
+    - name: Run black formatter
+      run: |
+        black --check --diff .
         
     - name: Run tests with coverage
       run: |
